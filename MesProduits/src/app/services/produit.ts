@@ -23,11 +23,13 @@ export class ProduitService {
   constructor(private http: HttpClient, private authService: AuthService) {
   }
   //toutes les api Rest retourne des Observables
-  listeProduit(): Observable<Produit[]> {
-    let jwt = this.authService.getToken();
+  /*  PLUS BESOIN DE
+      let jwt = this.authService.getToken();
     jwt = "Bearer " + jwt;
-    let httpHeaders = new HttpHeaders({ "Authorization": jwt })
-    return this.http.get<Produit[]>(environment.apiURL + "/all", { headers: httpHeaders });
+    let httpHeaders = new HttpHeaders({ "Authorization": jwt }) 
+    CAR JAI INTERCEPTOR */
+  listeProduit(): Observable<Produit[]> {
+    return this.http.get<Produit[]>(environment.apiURL + "/all",);
   }
 
   ajouterProduit(prod: Produit): Observable<Produit> {

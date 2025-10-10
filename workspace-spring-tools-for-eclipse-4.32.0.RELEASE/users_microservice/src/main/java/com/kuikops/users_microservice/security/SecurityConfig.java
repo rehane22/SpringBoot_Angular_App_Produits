@@ -26,6 +26,20 @@ public class SecurityConfig {
             Exception {
         http.sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest
+                                                                          request) {
+                        CorsConfiguration cors = new CorsConfiguration();
+                        cors.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                        cors.setAllowedMethods(Collections.singletonList("*"));
+                        cors.setAllowCredentials(true);
+                        cors.setAllowedHeaders(Collections.singletonList("*"));
+                        cors.setExposedHeaders(Collections.singletonList("Authorization"));
+                        cors.setMaxAge(3600L);
+                        return cors;
+                    }
+                }))
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -40,7 +54,7 @@ public class SecurityConfig {
                     }
                 }))
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("/login").permitAll()
+                        requests.requestMatchers("/login","/register/**", "/verifyEmail/**").permitAll()
                                 .requestMatchers("/all").hasAuthority("ADMIN")
                                 .anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter (authMgr),

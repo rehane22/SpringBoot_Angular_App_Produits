@@ -10,21 +10,17 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  /*  users: User[] = [
-     { "username": "admin", "password": "123", "roles": ['ADMIN'] },
-     { "username": "nadhem", "password": "123", "roles": ['USER'] }
-   ]; */
-
   private helper = new JwtHelperService();
   public loggedUser!: string;
   public isloggedIn: Boolean = false;
   public roles!: string[];
   token: string = "";
+  public regitredUser : User = new User();
 
   constructor(private router: Router, private http: HttpClient) { }
   login(user: User) {
     console.log(user)
-    return this.http.post<User>(environment.apiURLServices + '/login', user, { observe: 'response' });
+    return this.http.post<User>(environment.apiURLUser + '/login', user, { observe: 'response' });
   }
   decodeJWT() {
     if (this.token == undefined)
@@ -80,6 +76,21 @@ export class AuthService {
     this.isloggedIn = true;
     //  this.getUserRoles(login);
   }
+
+  registerUser(user: User) {
+    return this.http.post<User>(environment.apiURLUser + '/register', user,
+      { observe: 'response' });
+  }
+
+  setRegistredUser(user: User) {
+    this.regitredUser = user;
+  }
+  getRegistredUser() {
+    return this.regitredUser;
+  }
+  validateEmail(code : string){
+return this.http.get<User>(environment.apiURLUser+'/verifyEmail/'+code);
+}
 
 }
 

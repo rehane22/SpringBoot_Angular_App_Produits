@@ -22,24 +22,17 @@ export class AddProduit implements OnInit {
   ngOnInit(): void {
     this.produitService.listeCategories().
       subscribe(cats => {
-        console.log(cats);
+
         this.categories = cats._embedded.categories;
       }
       );
-    //this.categories = this.produitService.listeCategories();
   }
-  /* addProduit() {
-    // this.newCategorie = this.produitService.consulterCategorie(this.newIdCat);
-    this.newProduit.categorie = this.newCategorie;
-    this.produitService.ajouterProduit(this.newProduit);
-    this.router.navigate(['produits']);
-  } */
+
 
   addProduit() {
     this.newProduit.categorie = this.categories.find(cat => cat.idCat == this.newIdCat)!;
     this.produitService.ajouterProduit(this.newProduit)
       .subscribe(prod => {
-        console.log(prod);
         this.router.navigate(['produits']);
       });
   }

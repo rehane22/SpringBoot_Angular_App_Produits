@@ -21,9 +21,7 @@ export class Produits {
   }
 
   chargerProduits() {
-    console.log(this.authService.loggedUser)
     this.produitService.listeProduit().subscribe(prods => {
-      console.log(prods);
       this.produits = prods;
     });
   }
@@ -31,7 +29,6 @@ export class Produits {
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
       this.produitService.supprimerProduit(p.idProduit).subscribe(() => {
-        console.log("Produit supprimé");
         this.chargerProduits();
       });
   }

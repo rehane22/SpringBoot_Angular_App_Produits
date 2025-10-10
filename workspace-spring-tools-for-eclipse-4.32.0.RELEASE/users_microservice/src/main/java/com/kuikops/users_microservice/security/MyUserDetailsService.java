@@ -29,8 +29,11 @@ public class MyUserDetailsService implements UserDetailsService {
                     SimpleGrantedAuthority(role.getRole());
             auths.add(auhority);
         });
+
+
         //on peut appeler 2 fois donc on est oblige de mettre toute la definition
         return new org.springframework.security.core.
-                userdetails.User(user.getUsername(), user.getPassword(), auths);
+                userdetails.User(user.getUsername(),user.getPassword(),user.getEnabled(),true,true
+                ,true,auths);
     }
 }

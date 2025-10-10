@@ -19,14 +19,12 @@ export class ListeCategories implements OnInit {
     this.produitService.listeCategories().
       subscribe(cats => {
         this.categories = cats._embedded.categories;
-        console.log(cats);
       });
   }
   chargerCategories() {
     this.produitService.listeCategories().
       subscribe(cats => {
         this.categories = cats._embedded.categories;
-        console.log(cats);
       });
   }
   categorieUpdated(cat: Categorie) {
